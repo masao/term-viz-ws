@@ -12,9 +12,11 @@ require 'uconv'
 TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'
 GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
+id = ARGV.shift || "47888"
+
 term = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver
 term.generateEncodeType = true
-wordlist = term.getWordList("47888")
+wordlist = term.getWordList(id)
 STDERR.puts("getWordList done.")
 
 #  parent = NodeArray.new()
