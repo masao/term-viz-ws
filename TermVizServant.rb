@@ -57,14 +57,14 @@ class TermVizPort
       c_db = BDB::Hash.open("edr_children.db")
       if c_db.has_key?(id)
 	 c_db[id].split(/\|/).each do |c_id|
-	    children.push(Node.new(c_id, words[c_id]))
+	    children.push(Node.new(words[c_id], c_id))
 	 end
       end
 
       p_db  = BDB::Hash.open("edr_parents.db")
       if p_db.has_key?(id)
 	 p_db[id].split(/\|/).each do |p_id|
-	    parents.push(Node.new(p_id, words[p_id]))
+	    parents.push(Node.new(words[p_id], p_id))
 	 end
       end
       wordlist.push(Word.new(words[id], id, "", parents, children))
