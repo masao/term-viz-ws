@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 
-<!-- WSDL description of the Terminology Browsing System. -->
+<!--
+ ** （複数）用語体系ブラウジングシステムのサービスを行うための WSDL 記述 **
+-->
 
 <definitions name="TermViz"
              targetNamespace="urn:TermViz"
@@ -12,52 +14,52 @@
              xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
-  <!-- Types for search - result elements, directory categories -->
+  <!-- Types  -->
   <types></types>
 
-  <!-- Messages for Google Web APIs - cached page, search, spelling. -->
+  <!-- Messages -->
 
-  <message name="wordSearch">
+  <message name="doWordSearch">
     <part name="term"            type="xsd:string"/>
     <part name="target"          type="xsd:string"/>
   </message>
 
-  <message name="wordSearchResponse">
+  <message name="doWordSearchResponse">
     <part name="return"          type="xsd:string"/>
   </message>
 
-  <message name="idSearch">
+  <message name="getWordList">
     <part name="id"              type="xsd:string"/>
   </message>
 
-  <message name="idSearchResponse">
+  <message name="getWordListResponse">
     <part name="return"          type="xsd:string"/>
   </message>
 
-  <!-- Port for Google Web APIs, "GoogleSearch" -->
+  <!-- Port -->
 
   <portType name="TermVizPort">
 
-    <operation name="wordSearch">
-      <input message="typens:wordSearch"/>
-      <output message="typens:wordSearchResponse"/>
+    <operation name="doWordSearch">
+      <input message="typens:doWordSearch"/>
+      <output message="typens:doWordSearchResponse"/>
     </operation>
 
-    <operation name="idSearch">
-      <input message="typens:idSearch"/>
-      <output message="typens:idSearchResponse"/>
+    <operation name="getWordList">
+      <input message="typens:getWordList"/>
+      <output message="typens:getWordListResponse"/>
     </operation>
 
   </portType>
 
 
-  <!-- Binding for Google Web APIs - RPC, SOAP over HTTP -->
+  <!-- Binding -->
 
   <binding name="TermVizBinding" type="typens:TermVizPort">
     <soap:binding style="rpc"
                   transport="http://schemas.xmlsoap.org/soap/http"/>
 
-    <operation name="wordSearch">
+    <operation name="doWordSearch">
       <soap:operation soapAction="urn:TermVizAction"/>
       <input>
         <soap:body use="encoded"
@@ -71,7 +73,7 @@
       </output>
     </operation>
 
-    <operation name="idSearch">
+    <operation name="getWordList">
       <soap:operation soapAction="urn:TermVizAction"/>
       <input>
         <soap:body use="encoded"
@@ -87,7 +89,7 @@
 
   </binding>
 
-  <!-- Endpoint for Google Web APIs -->
+  <!-- Endpoint -->
   <service name="TermVizService">
     <port name="TermVizPort" binding="typens:TermVizBinding">
       <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/TermVizService.cgi"/>

@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/bin/ruby
 require 'TermVizServant.rb'
 
 require 'soap/standaloneServer'
@@ -9,7 +9,7 @@ class TermVizPort
 
   
   Methods = [
-    [ "wordSearch", "wordSearch", [
+    [ "doWordSearch", "doWordSearch", [
       [ "in", "term",
         [ SOAP::SOAPString ] ],
       [ "in", "target",
@@ -17,7 +17,7 @@ class TermVizPort
       [ "retval", "return",
         [ SOAP::SOAPString ] ] ],
       "urn:TermVizAction", "urn:TermViz" ],
-    [ "idSearch", "idSearch", [
+    [ "getWordList", "getWordList", [
       [ "in", "id",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",

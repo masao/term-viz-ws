@@ -2,7 +2,7 @@ require 'TermViz.rb'
 
 class TermVizPort
   # SYNOPSIS
-  #   wordSearch( term, target )
+  #   doWordSearch( term, target )
   #
   # ARGS
   #   term		String - {http://www.w3.org/2001/XMLSchema}string
@@ -14,13 +14,12 @@ class TermVizPort
   # RAISES
   #    N/A
   #
-  def wordSearch( term, target )
-     # raise NotImplementedError.new
-     "Hello!!!"
+  def doWordSearch( term, target )
+    raise NotImplementedError.new
   end
   
   # SYNOPSIS
-  #   idSearch( id )
+  #   getWordList( id )
   #
   # ARGS
   #   id		String - {http://www.w3.org/2001/XMLSchema}string
@@ -31,7 +30,7 @@ class TermVizPort
   # RAISES
   #    N/A
   #
-  def idSearch( id )
+  def getWordList( id )
     raise NotImplementedError.new
   end
   
