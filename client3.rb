@@ -9,7 +9,7 @@ require 'GraphViz'
 require 'soap/wsdlDriver'
 require 'uconv'
 
-TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
+TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'
 GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
 term = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver

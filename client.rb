@@ -6,7 +6,7 @@ GC.disable
 require 'soap/wsdlDriver'
 require 'uconv'
 
-MY_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
+MY_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'
 
 def search (key)
    obj = SOAP::WSDLDriverFactory.new(MY_WSDL).createDriver

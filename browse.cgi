@@ -8,7 +8,7 @@ require 'cgi'
 require 'GraphViz'
 require 'TermUtil'
 
-TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
+TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'
 GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
 class CGI
