@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<definitions name="Term"
+             targetNamespace="urn:Term"
+             xmlns:typens="urn:Term"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <import namespace="urn:Term"
+      location="http://nile.ulis.ac.jp/~masao/term-viz-ws/term-common.wsdl"/>
+	     
+  <!-- Endpoint -->
+  <service name="TermService">
+    <port name="TermPort" binding="typens:TermBinding">
+      <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/odp/"/>
+    </port>
+  </service>
+</definitions>
