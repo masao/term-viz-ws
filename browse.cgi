@@ -38,6 +38,11 @@ def html_escape(str)
 end
 alias h html_escape
 
+def uri_escape(str)
+	CGI.escape(str.to_s)
+end
+alias u uri_escape
+
 def html_head()
 	STDERR.puts "html_head()"
 	str = <<EOF
@@ -127,7 +132,7 @@ def body(cgi)
 			result << "<h2>完全一致: #{searched.exactMatchElements.size}件</h2>"
 			result << "<ul>\n"
 			searched.exactMatchElements.each do |node|
-				result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(node.name)}\">#{node.name}</a>\n"
+				result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{u(node.name)}\">#{node.name}</a>\n"
 			end
 			result << "</ul>"
 		end
@@ -135,7 +140,7 @@ def body(cgi)
 			result << "<h2>部分一致: #{searched.substrMatchElements.size}件</h2>"
 			result << "<ul>\n"
 			searched.substrMatchElements.each do |node|
-				result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(node.name)}\">#{node.name}</a>\n"
+				result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{u(node.name)}\">#{node.name}</a>\n"
 			end
 			result << "</ul>"
 		end
