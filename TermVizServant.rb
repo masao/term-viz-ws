@@ -15,7 +15,7 @@ class TermVizPort
   #    N/A
   #
   def doWordSearch( term, target )
-    raise NotImplementedError.new
+    "Hello"
   end
   
   # SYNOPSIS
