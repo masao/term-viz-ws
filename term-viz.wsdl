@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+
+<!-- WSDL description of the Terminology Browsing System. -->
+
+<definitions name="TermViz"
+             targetNamespace="urn:TermViz"
+             xmlns:typens="urn:TermViz"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- Types for search - result elements, directory categories -->
+  <types></types>
+
+  <!-- Messages for Google Web APIs - cached page, search, spelling. -->
+
+  <message name="wordSearch">
+    <part name="term"            type="xsd:string"/>
+    <part name="target"          type="xsd:string"/>
+  </message>
+
+  <message name="wordSearchResponse">
+    <part name="return"          type="xsd:string"/>
+  </message>
+
+  <message name="idSearch">
+    <part name="id"              type="xsd:string"/>
+  </message>
+
+  <message name="idSearchResponse">
+    <part name="return"          type="xsd:string"/>
+  </message>
+
+  <!-- Port for Google Web APIs, "GoogleSearch" -->
+
+  <portType name="TermVizPort">
+
+    <operation name="wordSearch">
+      <input message="typens:wordSearch"/>
+      <output message="typens:wordSearchResponse"/>
+    </operation>
+
+    <operation name="idSearch">
+      <input message="typens:idSearch"/>
+      <output message="typens:idSearchResponse"/>
+    </operation>
+
+  </portType>
+
+
+  <!-- Binding for Google Web APIs - RPC, SOAP over HTTP -->
+
+  <binding name="TermVizBinding" type="typens:TermVizPort">
+    <soap:binding style="rpc"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="wordSearch">
+      <soap:operation soapAction="urn:TermVizAction"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:TermViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:TermViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="idSearch">
+      <soap:operation soapAction="urn:TermVizAction"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:TermViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:TermViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+  </binding>
+
+  <!-- Endpoint for Google Web APIs -->
+  <service name="TermVizService">
+    <port name="TermVizPort" binding="typens:TermVizBinding">
+      <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/TermVizService.cgi"/>
+    </port>
+  </service>
+
+</definitions>
