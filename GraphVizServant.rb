@@ -1,5 +1,4 @@
 require 'GraphViz.rb'
-require 'graph/graphviz_dot'
 
 class GraphVizPort
   # SYNOPSIS
@@ -17,23 +16,25 @@ class GraphVizPort
   #    N/A
   #
   def doGraphViz( wordlist, rankdir, format )
-     linklist = []
-     namelist = {}
-     STDERR.puts wordlist.class
-     wordlist.each do |word|
-	namelist[word.id] = word.name
-	word.child.each do |child|
-	   linklist << [ word.id, child.idref ]
-	   namelist[child.idref] = child.name
-	end
-	word.parent.each do |parent|
-	   linklist << [ parent.idref, word.id ]
-	   namelist[parent.idref] = parent.name
-	end
-     end
-     dgp = DotGraphPrinter.new(linklist)
-     dgp.node_labeler = proc{|n| namelist[n]}
-     return SOAP::SOAPBase64.new(dgp.to_dot_specification)
+     return SOAP::SOAPBase64.new(wordlist.to_dot(rankdir))
   end
-  
+end
+
+class WordArray
+   def to_dot (rankdir = nil)
+      retstr = "digraph G {\n"
+      retstr << "  graph [rankdir=\"#{rankdir}\"];\n" if rankdir
+      self.each do |word|
+	 retstr << "  #{word.id} [label=\"#{word.name}\"];\n"
+	 word.child.each do |node|
+	    retstr << "  #{node.id} [label=\"#{node.name}\"];\n"
+	    retstr << "  #{word.id} -> #{node.id}\n"
+	 end
+	 word.parent.each do |node|
+	    retstr << "  #{node.id} [label=\"#{node.name}\"];\n"
+	    retstr << "  #{node.id} -> #{word.id}\n"
+	 end
+      end
+      retstr << "}\n"
+   end
 end
