@@ -45,10 +45,11 @@ DOT = "/home/x/masao/bin/dot"
 def dot_format (str, format = "png")
    ENV["LD_LIBRARY_PATH"] = "/usr/local/lib"
    ENV["DOTFONTPATH"] = "."
-   cmd = open("|#{DOT} -T#{format} -Nfontname=kochi", "r+")
-   cmd.print str
-   cmd.close_write
-   cmd.read
+   IO::popen("#{DOT} -T#{format} -Nfontname=kochi", "r+") do |cmd|
+      cmd.print str
+      cmd.close_write
+      cmd.read
+   end
 end
 
 # TEST
