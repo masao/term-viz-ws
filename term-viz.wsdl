@@ -41,6 +41,39 @@
 	</xsd:all>
       </xsd:complexType>
 
+      <xsd:complexType name="WordArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Word[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Word">
+        <xsd:sequence>
+	  <xsd:element name="name"   type="xsd:string"/>
+	  <xsd:element name="id"     type="xsd:string"/>
+	  <xsd:element name="origin" type="xsd:anyURI"/>
+	  <xsd:element name="parent" type="typens:NodeArray"/>
+	  <xsd:element name="child"  type="typens:NodeArray"/>
+	</xsd:sequence>
+      </xsd:complexType>
+
+      <xsd:complexType name="NodeArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Node[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Node">
+        <xsd:all>
+	  <xsd:element name="word"   type="xsd:string"/>
+	  <xsd:element name="idref"  type="xsd:string"/>
+	</xsd:all>
+      </xsd:complexType>
+
     </xsd:schema>
   </types>
 
@@ -59,7 +92,7 @@
   </message>
 
   <message name="getWordListResponse">
-    <part name="return"          type="xsd:string"/>
+    <part name="return"          type="typens:WordArray"/>
   </message>
 
   <!-- Port -->

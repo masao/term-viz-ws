@@ -20,10 +20,22 @@ class TermVizPort
     [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
   )
   MappingRegistry.set(
+    WordArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    [ XSD::QName.new( "urn:TermViz", "Word" ) ]
+  )
+  MappingRegistry.set(
     ResultElement,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
     [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
+  )
+  MappingRegistry.set(
+    Word,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    [ XSD::QName.new( "urn:TermViz", "Word" ) ]
   )
   
   Methods = [
@@ -37,7 +49,7 @@ class TermVizPort
       [ "in", "id",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ SOAP::SOAPString ] ] ],
+        [ ::SOAP::SOAPArray, "urn:TermViz", "Word" ] ] ],
       "urn:TermVizAction", "urn:TermViz" ]
   ]
 end

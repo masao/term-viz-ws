@@ -1,5 +1,6 @@
 require 'TermViz.rb'
 require 'sary'
+require 'bdb'
 
 class TermVizPort
    # SYNOPSIS
@@ -41,14 +42,32 @@ class TermVizPort
    #   id		String - {http://www.w3.org/2001/XMLSchema}string
    #
    # RETURNS
-   #   return		String - {http://www.w3.org/2001/XMLSchema}string
+   #   return		WordList - {urn:TermViz}WordArray
    #
    # RAISES
    #    N/A
    #
    def getWordList( id )
-      raise NotImplementedError.new
-   end
-   
-end
+      words = BDB::Hash.open("edr_words.db")
+      raise "id not found: #{id}" unless words.has_key?(id)
+      wordlist = WordArray.new
+      children = NodeArray.new
+      parents  = NodeArray.new
 
+      c_db = BDB::Hash.open("edr_children.db")
+      if c_db.has_key?(id)
+	 c_db[id].split(/\|/).each do |c_id|
+	    children.push(Node.new(c_id, words[c_id]))
+	 end
+      end
+
+      p_db  = BDB::Hash.open("edr_parents.db")
+      if p_db.has_key?(id)
+	 p_db[id].split(/\|/).each do |p_id|
+	    parents.push(Node.new(p_id, words[p_id]))
+	 end
+      end
+      wordlist.push(Word.new(words[id], id, "", parents, children))
+   end
+
+end
