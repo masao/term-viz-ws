@@ -1,7 +1,9 @@
+require 'cgi'
+
 def replace_url (str, param)
    str.gsub(/\$(\w+)/) do
       if param.has_key? $1
-	 param[$1]
+	 CGI::escape(param[$1])
       else
 	 ""
       end
