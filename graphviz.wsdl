@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+
+<!--
+ ** （複数）用語体系ブラウジングシステムのサービスを行うための WSDL 記述 **
+-->
+
+<definitions name="GraphViz"
+             targetNamespace="urn:GraphViz"
+             xmlns:typens="urn:GraphViz"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <!-- Types  -->
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="urn:GraphViz">
+
+      <xsd:complexType name="WordArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Word[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Word">
+        <xsd:all>
+	  <xsd:element name="name"   type="xsd:string"/>
+	  <xsd:element name="id"     type="xsd:string"/>
+	  <xsd:element name="origin" type="xsd:anyURI"/>
+	  <xsd:element name="parent" type="typens:NodeArray"/>
+	  <xsd:element name="child"  type="typens:NodeArray"/>
+	</xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="NodeArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Node[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="Node">
+        <xsd:all>
+	  <xsd:element name="word"   type="xsd:string"/>
+	  <xsd:element name="idref"  type="xsd:string"/>
+	</xsd:all>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </types>
+
+  <!-- Messages -->
+
+  <message name="doGraphViz">
+    <part name="wordlist"     type="typens:WordArray"/>
+    <part name="rankdir"      type="xsd:string"/>
+    <part name="format"       type="xsd:string"/>
+  </message>
+
+  <message name="doGraphVizResponse">
+    <part name="return"       type="xsd:base64Binary"/>
+  </message>
+
+  <!-- Port -->
+
+  <portType name="GraphVizPort">
+
+    <operation name="doGraphViz">
+      <input message="typens:doGraphViz"/>
+      <output message="typens:doGraphVizResponse"/>
+    </operation>
+
+  </portType>
+
+  <!-- Binding -->
+
+  <binding name="GraphVizBinding" type="typens:GraphVizPort">
+    <soap:binding style="rpc"
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="doGraphViz">
+      <soap:operation soapAction="urn:GraphVizAction"/>
+      <input>
+        <soap:body use="encoded"
+                   namespace="urn:GraphViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+                   namespace="urn:GraphViz"
+                   encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+  </binding>
+
+  <!-- Endpoint -->
+  <service name="GraphVizService">
+    <port name="GraphVizPort" binding="typens:GraphVizBinding">
+      <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/GraphVizService.cgi"/>
+    </port>
+  </service>
+
+</definitions>
