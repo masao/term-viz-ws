@@ -1,4 +1,4 @@
-soap_*.xml
+soap_*
 soap-log*
 *.db
 *.ary
