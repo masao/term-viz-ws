@@ -47,7 +47,7 @@ class GraphVizPort
       "urn:GraphVizAction", "urn:GraphViz" ]
   ]
 
-  DefaultEndpointUrl = "http://nile.ulis.ac.jp/~masao/term-viz-ws/GraphVizService.cgi"
+  DefaultEndpointUrl = "http://avalon.ulis.ac.jp/~masao/term-viz-ws/GraphVizService.cgi"
 
   attr_accessor :mappingRegistry
   attr_reader :endPointUrl
