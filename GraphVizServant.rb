@@ -1,5 +1,4 @@
 require 'GraphViz.rb'
-require 'base64'
 require 'graph/graphviz_dot'
 
 class GraphVizPort
@@ -34,7 +33,7 @@ class GraphVizPort
      end
      dgp = DotGraphPrinter.new(linklist)
      dgp.node_labeler = proc{|n| namelist[n]}
-     return encode64(dgp.to_dot_specification)
+     return SOAP::SOAPBase64.new(dgp.to_dot_specification)
   end
   
 end
