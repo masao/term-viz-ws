@@ -5,9 +5,9 @@
  ** （複数）用語体系ブラウジングシステムのサービスを行うための WSDL 記述 **
 -->
 
-<definitions name="TermViz"
-             targetNamespace="urn:TermViz"
-             xmlns:typens="urn:TermViz"
+<definitions name="Term"
+             targetNamespace="urn:Term"
+             xmlns:typens="urn:Term"
              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
@@ -17,7 +17,7 @@
   <!-- Types  -->
   <types>
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
-		targetNamespace="urn:TermViz">
+		targetNamespace="urn:Term">
 
       <xsd:complexType name="WordSearchResult">
         <xsd:all>
@@ -82,7 +82,7 @@
 
   <!-- Port -->
 
-  <portType name="TermVizPort">
+  <portType name="TermPort">
 
     <operation name="doWordSearch">
       <input message="typens:doWordSearch"/>
@@ -99,34 +99,34 @@
 
   <!-- Binding -->
 
-  <binding name="TermVizBinding" type="typens:TermVizPort">
+  <binding name="TermBinding" type="typens:TermPort">
     <soap:binding style="rpc"
                   transport="http://schemas.xmlsoap.org/soap/http"/>
 
     <operation name="doWordSearch">
-      <soap:operation soapAction="urn:TermVizAction"/>
+      <soap:operation soapAction="urn:TermAction"/>
       <input>
         <soap:body use="encoded"
-                   namespace="urn:TermViz"
+                   namespace="urn:Term"
                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
       <output>
         <soap:body use="encoded"
-                   namespace="urn:TermViz"
+                   namespace="urn:Term"
                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </output>
     </operation>
 
     <operation name="getWordList">
-      <soap:operation soapAction="urn:TermVizAction"/>
+      <soap:operation soapAction="urn:TermAction"/>
       <input>
         <soap:body use="encoded"
-                   namespace="urn:TermViz"
+                   namespace="urn:Term"
                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </input>
       <output>
         <soap:body use="encoded"
-                   namespace="urn:TermViz"
+                   namespace="urn:Term"
                    encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
       </output>
     </operation>
@@ -134,9 +134,9 @@
   </binding>
 
   <!-- Endpoint -->
-  <service name="TermVizService">
-    <port name="TermVizPort" binding="typens:TermVizBinding">
-      <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/TermVizService.cgi"/>
+  <service name="TermService">
+    <port name="TermPort" binding="typens:TermBinding">
+      <soap:address location="http://nile.ulis.ac.jp/~masao/term-viz-ws/TermService.cgi"/>
     </port>
   </service>
 

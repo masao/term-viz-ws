@@ -1,4 +1,4 @@
-# urn:TermViz
+# urn:Term
 class WordSearchResult
   def exactMatchElements
     @exactMatchElements
@@ -23,10 +23,10 @@ class WordSearchResult
   end
 end
 
-# urn:TermViz
+# urn:Term
 class NodeArray < Array; end
 
-# urn:TermViz
+# urn:Term
 class Node
   def name
     @name
@@ -51,10 +51,10 @@ class Node
   end
 end
 
-# urn:TermViz
+# urn:Term
 class WordArray < Array; end
 
-# urn:TermViz
+# urn:Term
 class Word
   def name
     @name

@@ -1,10 +1,10 @@
-require 'TermViz.rb'
+require 'Term.rb'
 
 require 'soap/proxy'
 require 'soap/rpcUtils'
 require 'soap/streamHandler'
 
-class TermVizPort
+class TermPort
   class EmptyResponseError < ::SOAP::Error; end
 
   MappingRegistry = ::SOAP::RPCUtils::MappingRegistry.new
@@ -13,31 +13,31 @@ class TermVizPort
     WordSearchResult,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "WordSearchResult" ) }
+    { :type => XSD::QName.new( "urn:Term", "WordSearchResult" ) }
   )
   MappingRegistry.set(
     NodeArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+    { :type => XSD::QName.new( "urn:Term", "Node" ) }
   )
   MappingRegistry.set(
     Node,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+    { :type => XSD::QName.new( "urn:Term", "Node" ) }
   )
   MappingRegistry.set(
     WordArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+    { :type => XSD::QName.new( "urn:Term", "Word" ) }
   )
   MappingRegistry.set(
     Word,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+    { :type => XSD::QName.new( "urn:Term", "Word" ) }
   )
   
   Methods = [
@@ -45,17 +45,17 @@ class TermVizPort
       [ "in", "term",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ ::SOAP::SOAPStruct, "urn:TermViz", "WordSearchResult" ] ] ],
-      "urn:TermVizAction", "urn:TermViz" ],
+        [ ::SOAP::SOAPStruct, "urn:Term", "WordSearchResult" ] ] ],
+      "urn:TermAction", "urn:Term" ],
     [ "getWordList", "getWordList", [
       [ "in", "id",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ ::SOAP::SOAPArray, "urn:TermViz", "Word" ] ] ],
-      "urn:TermVizAction", "urn:TermViz" ]
+        [ ::SOAP::SOAPArray, "urn:Term", "Word" ] ] ],
+      "urn:TermAction", "urn:Term" ]
   ]
 
-  DefaultEndpointUrl = "http://nile.ulis.ac.jp/~masao/term-viz-ws/TermVizService.cgi"
+  DefaultEndpointUrl = "http://nile.ulis.ac.jp/~masao/term-viz-ws/TermService.cgi"
 
   attr_accessor :mappingRegistry
   attr_reader :endPointUrl

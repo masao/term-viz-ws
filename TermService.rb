@@ -1,9 +1,9 @@
 #!/usr/local/bin/ruby
-require 'TermVizServant.rb'
+require 'TermServant.rb'
 
 require 'soap/standaloneServer'
 
-class TermVizPort
+class TermPort
   require 'soap/rpcUtils'
   MappingRegistry = SOAP::RPCUtils::MappingRegistry.new
 
@@ -11,31 +11,31 @@ class TermVizPort
     WordSearchResult,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "WordSearchResult" ) }
+    { :type => XSD::QName.new( "urn:Term", "WordSearchResult" ) }
   )
   MappingRegistry.set(
     NodeArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+    { :type => XSD::QName.new( "urn:Term", "Node" ) }
   )
   MappingRegistry.set(
     Node,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+    { :type => XSD::QName.new( "urn:Term", "Node" ) }
   )
   MappingRegistry.set(
     WordArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+    { :type => XSD::QName.new( "urn:Term", "Word" ) }
   )
   MappingRegistry.set(
     Word,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+    { :type => XSD::QName.new( "urn:Term", "Word" ) }
   )
   
   Methods = [
@@ -43,14 +43,14 @@ class TermVizPort
       [ "in", "term",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ ::SOAP::SOAPStruct, "urn:TermViz", "WordSearchResult" ] ] ],
-      "urn:TermVizAction", "urn:TermViz" ],
+        [ ::SOAP::SOAPStruct, "urn:Term", "WordSearchResult" ] ] ],
+      "urn:TermAction", "urn:Term" ],
     [ "getWordList", "getWordList", [
       [ "in", "id",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ ::SOAP::SOAPArray, "urn:TermViz", "Word" ] ] ],
-      "urn:TermVizAction", "urn:TermViz" ]
+        [ ::SOAP::SOAPArray, "urn:Term", "Word" ] ] ],
+      "urn:TermAction", "urn:Term" ]
   ]
 end
 
@@ -58,12 +58,12 @@ class App < SOAP::StandaloneServer
   def initialize( *arg )
     super( *arg )
 
-    servant = TermVizPort.new
-    TermVizPort::Methods.each do | methodNameAs, methodName, params, soapAction, namespace |
+    servant = TermPort.new
+    TermPort::Methods.each do | methodNameAs, methodName, params, soapAction, namespace |
       addMethodWithNSAs( namespace, servant, methodName, methodNameAs, params, soapAction )
     end
 
-    self.mappingRegistry = TermVizPort::MappingRegistry
+    self.mappingRegistry = TermPort::MappingRegistry
     setSevThreshold( Devel::Logger::ERROR )
   end
 end

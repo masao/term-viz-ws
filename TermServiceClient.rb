@@ -1,9 +1,9 @@
 #!/usr/local/bin/ruby
-require 'TermVizDriver.rb'
+require 'TermDriver.rb'
 
-endpointUrl = ARGV.shift || TermVizPort::DefaultEndpointUrl
+endpointUrl = ARGV.shift || TermPort::DefaultEndpointUrl
 proxyUrl = ENV[ 'http_proxy' ] || ENV[ 'HTTP_PROXY' ]
-obj = TermVizPort.new( endpointUrl, proxyUrl )
+obj = TermPort.new( endpointUrl, proxyUrl )
 
 # Uncomment the below line to see SOAP wiredumps.
 # obj.setWireDumpDev( STDERR )
@@ -16,7 +16,7 @@ obj = TermVizPort.new( endpointUrl, proxyUrl )
 #   term		 - {http://www.w3.org/2001/XMLSchema}string
 #
 # RETURNS
-#   return		WordSearchResult - {urn:TermViz}WordSearchResult
+#   return		WordSearchResult - {urn:Term}WordSearchResult
 #
 # RAISES
 #    N/A
@@ -31,7 +31,7 @@ puts obj.doWordSearch( term )
 #   id		 - {http://www.w3.org/2001/XMLSchema}string
 #
 # RETURNS
-#   return		WordArray - {urn:TermViz}WordArray
+#   return		WordArray - {urn:Term}WordArray
 #
 # RAISES
 #    N/A
