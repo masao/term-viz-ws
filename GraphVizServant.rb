@@ -45,6 +45,7 @@ DOT = "/home/x/masao/bin/dot"
 def dot_format (str, format = "png")
    ENV["LD_LIBRARY_PATH"] = "/usr/local/lib"
    ENV["DOTFONTPATH"] = "."
+   raise "format error: #{format}" unless format =~ /^\w+$/
    IO::popen("#{DOT} -T#{format} -Nfontname=kochi", "r+") do |cmd|
       cmd.print str
       cmd.close_write
