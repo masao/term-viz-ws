@@ -38,4 +38,5 @@ obj.setWireDumpDev(File.open("soap-log3", "w"))
    open("soap_doGraphViz.#{format}", "w") {|f|
       f.print result
    }
+   obj.setWireDumpDev(nil)
 end
