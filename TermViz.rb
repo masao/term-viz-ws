@@ -114,12 +114,12 @@ class NodeArray < Array; end
 
 # urn:TermViz
 class Node
-  def word
-    @word
+  def name
+    @name
   end
 
-  def word=( newword )
-    @word = newword
+  def name=( newname )
+    @name = newname
   end
 
   def idref
@@ -130,9 +130,9 @@ class Node
     @idref = newidref
   end
 
-  def initialize( word = nil,
+  def initialize( name = nil,
       idref = nil )
-    @word = word
+    @name = name
     @idref = idref
   end
 end

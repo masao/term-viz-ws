@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby -Ku
+#!/usr/local/bin/ruby
 require 'GraphVizServant.rb'
 
 require 'soap/cgistub'

@@ -1,6 +1,8 @@
 #!/usr/local/bin/ruby
 # $Id$
 
+GC.disable
+
 require 'soap/wsdlDriver'
 require 'uconv'
 
@@ -14,15 +16,7 @@ def search (key)
    obj.doWordSearch(key)
 end
 
-def usage
-   puts "USAGE:  #{$0} keyword ..."
-   exit
-end
-
-usage() if ARGV.size == 0
-
-ARGV.each do |key|
-   result = search(Uconv.euctou8(key))
-   puts "窗链办米: #{result.exactMatchElements.size} 凤"
-   puts "婶尸办米: #{result.substrMatchElements.size} 凤"
-end
+key = ARGV.shift || "攫鼠浮瑚"
+result = search(Uconv.euctou8(key))
+puts "窗链办米: #{result.exactMatchElements.size} 凤"
+puts "婶尸办米: #{result.substrMatchElements.size} 凤"

@@ -25,11 +25,11 @@ class GraphVizPort
 	namelist[word.id] = word.name
 	word.child.each do |child|
 	   linklist << [ word.id, child.idref ]
-	   namelist[child.idref] = child.word
+	   namelist[child.idref] = child.name
 	end
 	word.parent.each do |parent|
 	   linklist << [ parent.idref, word.id ]
-	   namelist[parent.idref] = parent.word
+	   namelist[parent.idref] = parent.name
 	end
      end
      dgp = DotGraphPrinter.new(linklist)
