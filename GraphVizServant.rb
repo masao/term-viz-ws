@@ -29,12 +29,12 @@ class WordArray
       self.each do |word|
 	 retstr << "  #{word.id} [label=\"#{word.name}\"];\n"
 	 word.child.each do |node|
-	    retstr << "  #{node.id} [label=\"#{node.name}\"];\n"
-	    retstr << "  #{word.id} -> #{node.id};\n"
+	    retstr << "  #{node.idref} [label=\"#{node.name}\"];\n"
+	    retstr << "  #{word.id} -> #{node.idref};\n"
 	 end
 	 word.parent.each do |node|
-	    retstr << "  #{node.id} [label=\"#{node.name}\"];\n"
-	    retstr << "  #{node.id} -> #{word.id};\n"
+	    retstr << "  #{node.idref} [label=\"#{node.name}\"];\n"
+	    retstr << "  #{node.idref} -> #{word.id};\n"
 	 end
       end
       retstr << "}\n"
