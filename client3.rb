@@ -32,9 +32,10 @@ obj.resetStream
 obj.setWireDumpFileBase("soap")
 obj.setWireDumpDev(File.open("soap-log3", "w"))
 
-STDERR.puts "before obj.doGraphViz"
-result = obj.doGraphViz(wordlist, "LR", "png")
-STDERR.puts "end obj.doGraphViz"
-open("soap_doGraphViz.dot", "w") {|f|
-   f.print result
-}
+["png", "dot", "plain"].each do |format|
+   result = obj.doGraphViz(wordlist, "LR", format)
+   STDERR.puts "obj.doGraphViz (#{format}) done."
+   open("soap_doGraphViz.#{format}", "w") {|f|
+      f.print result
+   }
+end
