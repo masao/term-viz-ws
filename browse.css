@@ -1,0 +1,9 @@
+@import url("http://nile.ulis.ac.jp/~masao/default.css");
+
+hr {
+  width: 70%;
+  margin: auto;
+}
+div.form {
+  text-align: center;
+}
