@@ -8,9 +8,6 @@ require 'cgi'
 require 'GraphViz'
 require 'TermUtil'
 
-TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'
-GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
-
 class CGI
    def param(key)
       if self.has_key?(key) && (self[key][0]).length > 0
@@ -20,6 +17,21 @@ class CGI
       end
    end
 end
+
+class TermService
+   attr_reader :name, :wsdl
+   def initialize(name, wsdl)
+      @name = name
+      @wsdl = wsdl
+   end
+end
+
+TERM_WSDL = {
+   'edr' => TermService.new("EDR", 'http://nile.ulis.ac.jp/~masao/term-viz-ws/edr/term.wsdl'),
+   'odp' => TermService.new("ODP", 'http://nile.ulis.ac.jp/~masao/term-viz-ws/odp/term.wsdl')
+}
+
+GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
 def html_escape(str)
    CGI.escapeHTML(str.to_s)
@@ -56,6 +68,15 @@ def html_form(cgi)
 <form action="browse.cgi" method="GET">
 見出し語検索:
 <input type="text" name="term" value="#{h(cgi.param("term") || "")}" size="50">
+<select name="target">
+EOF
+   TERM_WSDL.each_key do |term|
+      result << "<option value=\"#{term}\""
+      result << " selected" if cgi.param("target") == term
+      result << ">#{TERM_WSDL[term].name}\n"
+   end
+   result << <<EOF
+</select>
 <input type="submit" value=" Search ">
 </form>
 </div>
@@ -65,16 +86,17 @@ end
 def body(cgi)
    result = ""
    id = cgi.param("id")
-   term = cgi.param("term")
+   target = cgi.param("target")
+   term = cgi.param("term") || ""
    format = cgi.param("format") || "imap"
    rankdir = cgi.param("rankdir") || "LR"
-   if id
-      obj = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver
+   if id and TERM_WSDL[target]
+      obj = SOAP::WSDLDriverFactory.new(TERM_WSDL[target].wsdl).createDriver
       obj.resetStream
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       wordlist = obj.getWordList(id)
       STDERR.puts "getWordList done."
-      dot = wordlist.to_dot(rankdir, cgi.script_name << '?format=imap;term=$label;id=$id')
+      dot = wordlist.to_dot(rankdir, cgi.script_name << "?target=#{target};format=imap;term=$label;id=$id")
 
       obj = SOAP::WSDLDriverFactory.new(GRAPHVIZ_WSDL).createDriver
       obj.resetStream
@@ -87,7 +109,7 @@ def body(cgi)
 	 result << "<div class=\"imap\"><map name=\"imap\">\n"
 	 result << obj.doGraphViz(dot, "cmap")
 	 result << "</map>\n"
-	 img_src = "#{cgi.script_name}?format=png;term=#{CGI.escape(term)};id=#{id}"
+	 img_src = "#{cgi.script_name}?target=#{target};format=png;term=#{CGI.escape(term)};id=#{id}"
 	 result << "<img src=\"#{img_src}\" usemap=\"#imap\"></div>\n"
       else
 	 result << "<pre>"
@@ -95,8 +117,8 @@ def body(cgi)
 	 result << "</pre>"
       end
       STDERR.puts "doGraphViz done."
-   elsif term
-      obj = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver
+   elsif term and TERM_WSDL[target]
+      obj = SOAP::WSDLDriverFactory.new(TERM_WSDL[target].wsdl).createDriver
       obj.resetStream
       # obj.setWireDumpDev(File.open("browse_cgi.#{$$}", "w"))
       searched = obj.doWordSearch(term)
@@ -105,7 +127,7 @@ def body(cgi)
 	 result << "<h2>部分一致: #{searched.exactMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.exactMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
@@ -113,7 +135,7 @@ def body(cgi)
 	 result << "<h2>部分一致: #{searched.substrMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.substrMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
@@ -121,14 +143,21 @@ def body(cgi)
    result
 end
 
-if $0 == __FILE__
-   cgi = CGI.new
-   case cgi.param("format")
-   when "png", "gif"
-      cgi.out("image/#{cgi.param("format")}") { body(cgi) }
-   else
-      cgi.out("text/html; charset=UTF-8") {
-	 html_head() << body(cgi) << html_form(cgi) << html_foot()
-      }
+begin
+   if $0 == __FILE__
+      cgi = CGI.new
+      case cgi.param("format")
+      when "png", "gif"
+	 cgi.out("image/#{cgi.param("format")}") { body(cgi) }
+      else
+	 cgi.out("text/html; charset=UTF-8") {
+	    html_head() << body(cgi) << html_form(cgi) << html_foot()
+	 }
+      end
    end
+rescue Exception
+   print "Content-Type: text/plain\r\n\r\n"
+   puts "#$! (#{$!.class})"
+   puts ""
+   puts $@.join( "\n" )
 end
