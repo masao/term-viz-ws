@@ -80,9 +80,10 @@ def body(cgi)
       obj.resetStream
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       obj.generateEncodeType = true
-      if format == "png" || format == "gif"
+      case format
+      when "png", "gif"
 	 result = obj.doGraphViz(dot, format)
-      elsif format == "imap"
+      when "imap", "cmap"
 	 result << "<div class=\"imap\"><map name=\"imap\">\n"
 	 result << obj.doGraphViz(dot, "cmap")
 	 result << "</map>\n"
