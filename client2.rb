@@ -8,6 +8,7 @@ MY_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
 
 obj = SOAP::WSDLDriverFactory.new(MY_WSDL).createDriver
 obj.resetStream
+obj.generateEncodeType = true
 obj.setWireDumpFileBase("soap")
 obj.setWireDumpDev(File.open("soap-log2", "w"))
 

@@ -2,11 +2,10 @@ require 'GraphViz.rb'
 
 class GraphVizPort
   # SYNOPSIS
-  #   doGraphViz( wordlist, rankdir, format )
+  #   doGraphViz( dot, format )
   #
   # ARGS
-  #   wordlist		WordArray - {urn:GraphViz}WordArray
-  #   rankdir		 - {http://www.w3.org/2001/XMLSchema}string
+  #   dot		 - {http://www.w3.org/2001/XMLSchema}base64Binary
   #   format		 - {http://www.w3.org/2001/XMLSchema}string
   #
   # RETURNS
@@ -15,30 +14,11 @@ class GraphVizPort
   # RAISES
   #    N/A
   #
-  def doGraphViz( wordlist, rankdir, format )
-     dot = wordlist.to_dot(rankdir)
+  def doGraphViz( dot, format )
      result = dot_format(dot, format)
      return SOAP::SOAPBase64.new(result)
   end
-end
-
-class WordArray
-   def to_dot (rankdir = "TB")
-      retstr = "digraph G {\n"
-      retstr << "  graph [rankdir=\"#{rankdir}\"];\n" if rankdir
-      self.each do |word|
-	 retstr << "  #{word.id} [label=\"#{word.name}\"];\n"
-	 word.child.each do |node|
-	    retstr << "  #{node.idref} [label=\"#{node.name}\"];\n"
-	    retstr << "  #{word.id} -> #{node.idref};\n"
-	 end
-	 word.parent.each do |node|
-	    retstr << "  #{node.idref} [label=\"#{node.name}\"];\n"
-	    retstr << "  #{node.idref} -> #{word.id};\n"
-	 end
-      end
-      retstr << "}\n"
-   end
+  
 end
 
 DOT = "/home/x/masao/bin/dot"

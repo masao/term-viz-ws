@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
 require 'GraphVizDriver.rb'
 
 endpointUrl = ARGV.shift || GraphVizPort::DefaultEndpointUrl
@@ -10,11 +10,10 @@ obj = GraphVizPort.new( endpointUrl, proxyUrl )
 
 
 # SYNOPSIS
-#   doGraphViz( wordlist, rankdir, format )
+#   doGraphViz( dot, format )
 #
 # ARGS
-#   wordlist		WordArray - {urn:GraphViz}WordArray
-#   rankdir		 - {http://www.w3.org/2001/XMLSchema}string
+#   dot		 - {http://www.w3.org/2001/XMLSchema}base64Binary
 #   format		 - {http://www.w3.org/2001/XMLSchema}string
 #
 # RETURNS
@@ -23,7 +22,7 @@ obj = GraphVizPort.new( endpointUrl, proxyUrl )
 # RAISES
 #    N/A
 #
-wordlist = rankdir = format = nil
-puts obj.doGraphViz( wordlist, rankdir, format )
+dot = format = nil
+puts obj.doGraphViz( dot, format )
 
 

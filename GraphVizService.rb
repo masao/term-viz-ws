@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
 require 'GraphVizServant.rb'
 
 require 'soap/standaloneServer'
@@ -7,37 +7,11 @@ class GraphVizPort
   require 'soap/rpcUtils'
   MappingRegistry = SOAP::RPCUtils::MappingRegistry.new
 
-  MappingRegistry.set(
-    WordArray,
-    ::SOAP::SOAPArray,
-    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:GraphViz", "Word" ) }
-  )
-  MappingRegistry.set(
-    Word,
-    ::SOAP::SOAPStruct,
-    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:GraphViz", "Word" ) }
-  )
-  MappingRegistry.set(
-    NodeArray,
-    ::SOAP::SOAPArray,
-    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    { :type => XSD::QName.new( "urn:GraphViz", "Node" ) }
-  )
-  MappingRegistry.set(
-    Node,
-    ::SOAP::SOAPStruct,
-    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    { :type => XSD::QName.new( "urn:GraphViz", "Node" ) }
-  )
   
   Methods = [
     [ "doGraphViz", "doGraphViz", [
-      [ "in", "wordlist",
-        [ ::SOAP::SOAPArray, "urn:GraphViz", "Word" ] ],
-      [ "in", "rankdir",
-        [ SOAP::SOAPString ] ],
+      [ "in", "dot",
+        [ SOAP::SOAPBase64 ] ],
       [ "in", "format",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",

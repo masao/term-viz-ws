@@ -15,51 +15,11 @@
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
   <!-- Types  -->
-  <types>
-    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
-		targetNamespace="urn:GraphViz">
-
-      <xsd:complexType name="WordArray">
-        <xsd:complexContent>
-          <xsd:restriction base="soapenc:Array">
-            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Word[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
-
-      <xsd:complexType name="Word">
-        <xsd:all>
-	  <xsd:element name="name"   type="xsd:string"/>
-	  <xsd:element name="id"     type="xsd:string"/>
-	  <xsd:element name="origin" type="xsd:anyURI"/>
-	  <xsd:element name="parent" type="typens:NodeArray"/>
-	  <xsd:element name="child"  type="typens:NodeArray"/>
-	</xsd:all>
-      </xsd:complexType>
-
-      <xsd:complexType name="NodeArray">
-        <xsd:complexContent>
-          <xsd:restriction base="soapenc:Array">
-            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Node[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
-
-      <xsd:complexType name="Node">
-        <xsd:all>
-	  <xsd:element name="name"   type="xsd:string"/>
-	  <xsd:element name="idref"  type="xsd:string"/>
-	</xsd:all>
-      </xsd:complexType>
-
-    </xsd:schema>
-  </types>
 
   <!-- Messages -->
 
   <message name="doGraphViz">
-    <part name="wordlist"     type="typens:WordArray"/>
-    <part name="rankdir"      type="xsd:string"/>
+    <part name="dot"          type="xsd:base64Binary"/>
     <part name="format"       type="xsd:string"/>
   </message>
 

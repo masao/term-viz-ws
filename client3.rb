@@ -3,14 +3,17 @@
 
 GC.disable	# Ruby1.6系ではなぜか BUS ERROR で落ちるので必要。
 
+require 'Term'
+require 'TermUtil'
 require 'GraphViz'
 require 'soap/wsdlDriver'
 require 'uconv'
 
 TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
-GRAPHVIZ_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
+GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
 term = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver
+term.generateEncodeType = true
 wordlist = term.getWordList("47888")
 STDERR.puts("getWordList done.")
 
@@ -33,7 +36,7 @@ obj.setWireDumpFileBase("soap")
 obj.setWireDumpDev(File.open("soap-log3", "w"))
 
 ["png", "dot", "plain"].each do |format|
-   result = obj.doGraphViz(wordlist, "LR", format)
+   result = obj.doGraphViz(wordlist.to_dot, format)
    STDERR.puts "obj.doGraphViz (#{format}) done."
    open("soap_doGraphViz.#{format}", "w") {|f|
       f.print result

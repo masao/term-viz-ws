@@ -6,7 +6,7 @@ TARGET = GraphViz.rb Term.rb
 all: $(TARGET)
 
 GraphViz.rb: graphviz.wsdl
-	$(WSDL2RUBY) --wsdl $< $(WSDL2RUBY_OPT)
+	$(WSDL2RUBY) --wsdl graphviz.wsdl $(WSDL2RUBY_OPT)
 
 Term.rb: term-viz.wsdl
 	$(WSDL2RUBY) --wsdl $< $(WSDL2RUBY_OPT)
