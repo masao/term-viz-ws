@@ -50,13 +50,13 @@
       </xsd:complexType>
 
       <xsd:complexType name="Word">
-        <xsd:sequence>
+        <xsd:all>
 	  <xsd:element name="name"   type="xsd:string"/>
 	  <xsd:element name="id"     type="xsd:string"/>
 	  <xsd:element name="origin" type="xsd:anyURI"/>
 	  <xsd:element name="parent" type="typens:NodeArray"/>
 	  <xsd:element name="child"  type="typens:NodeArray"/>
-	</xsd:sequence>
+	</xsd:all>
       </xsd:complexType>
 
       <xsd:complexType name="NodeArray">
