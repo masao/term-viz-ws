@@ -12,3 +12,8 @@ div.imap {
   margin: auto;
   text-align: center;
 }
+
+p.error {
+  text-align: center;
+  color: red;
+}

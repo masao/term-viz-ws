@@ -139,6 +139,9 @@ def body(cgi)
 	 end
 	 result << "</ul>"
       end
+      if searched.substrMatchElements.size == 0 && searched.exactMatchElements.size == 0
+	 result << "<p class=\"error\"><strong>#{h term}</strong>に一致する用語はありませんでした。</p>\n"
+      end
    end
    result
 end
