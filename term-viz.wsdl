@@ -15,17 +15,43 @@
              xmlns="http://schemas.xmlsoap.org/wsdl/">
 
   <!-- Types  -->
-  <types></types>
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="urn:TermViz">
+
+      <xsd:complexType name="WordSearchResult">
+        <xsd:all>
+          <xsd:element name="exactMatchElements"  type="typens:ResultElementArray"/>
+          <xsd:element name="substrMatchElements" type="typens:ResultElementArray"/>
+	</xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="ResultElementArray">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ResultElement[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="ResultElement">
+        <xsd:all>
+	  <xsd:element name="id"   type="xsd:string"/>
+          <xsd:element name="word" type="xsd:string"/>
+	</xsd:all>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </types>
 
   <!-- Messages -->
 
   <message name="doWordSearch">
     <part name="term"            type="xsd:string"/>
-    <part name="target"          type="xsd:string"/>
   </message>
 
   <message name="doWordSearchResponse">
-    <part name="return"          type="xsd:string"/>
+    <part name="return"          type="typens:WordSearchResult"/>
   </message>
 
   <message name="getWordList">

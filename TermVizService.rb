@@ -7,15 +7,31 @@ class TermVizPort
   require 'soap/rpcUtils'
   MappingRegistry = SOAP::RPCUtils::MappingRegistry.new
 
+  MappingRegistry.set(
+    WordSearchResult,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    [ XSD::QName.new( "urn:TermViz", "WordSearchResult" ) ]
+  )
+  MappingRegistry.set(
+    ResultElementArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
+  )
+  MappingRegistry.set(
+    ResultElement,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
+  )
   
   Methods = [
     [ "doWordSearch", "doWordSearch", [
       [ "in", "term",
         [ SOAP::SOAPString ] ],
-      [ "in", "target",
-        [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ SOAP::SOAPString ] ] ],
+        [ ::SOAP::SOAPStruct, "urn:TermViz", "WordSearchResult" ] ] ],
       "urn:TermVizAction", "urn:TermViz" ],
     [ "getWordList", "getWordList", [
       [ "in", "id",

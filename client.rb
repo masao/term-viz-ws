@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/local/bin/ruby -Ku
 # $Id$
 
 require 'soap/wsdlDriver'
@@ -6,6 +6,6 @@ require 'soap/wsdlDriver'
 MY_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
 
 obj = SOAP::WSDLDriverFactory.new(MY_WSDL).createDriver
-result = obj.doWordSearch("bababa", "hogehoge")
+result = obj.doWordSearch("情報")
 
-puts result
+p result
