@@ -124,10 +124,10 @@ def body(cgi)
       searched = obj.doWordSearch(term)
       default_format = "imap"
       if searched.exactMatchElements.size > 0
-	 result << "<h2>部分一致: #{searched.exactMatchElements.size}件</h2>"
+	 result << "<h2>完全一致: #{searched.exactMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.exactMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(node.name)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
@@ -135,7 +135,7 @@ def body(cgi)
 	 result << "<h2>部分一致: #{searched.substrMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.substrMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};target=#{target};format=#{default_format};term=#{h(node.name)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
