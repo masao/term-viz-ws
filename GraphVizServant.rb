@@ -41,7 +41,7 @@ class WordArray
    end
 end
 
-DOT = "/usr/local/bin/dot"
+DOT = "/home/x/masao/bin/dot"
 def dot_format (str, format = "png")
    ENV["LD_LIBRARY_PATH"] = "/usr/local/lib"
    ENV["DOTFONTPATH"] = "."
