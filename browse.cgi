@@ -85,14 +85,16 @@ def body(cgi)
       # obj.setWireDumpDev(File.open("browse_cgi.#{$$}", "w"))
       searched = obj.doWordSearch(term)
       if searched.exactMatchElements.size > 0
-	 result << "<h2>完全一致</h2>\n<ul>"
+	 result << "<h2>部分一致: #{searched.exactMatchElements.size}件</h2>"
+	 result << "<ul>\n"
 	 searched.exactMatchElements.each do |node|
 	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=png;term=#{h(term)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
       if searched.substrMatchElements.size > 0
-	 result << "<h2>部分一致</h2>\n<ul>"
+	 result << "<h2>部分一致: #{searched.substrMatchElements.size}件</h2>"
+	 result << "<ul>\n"
 	 searched.substrMatchElements.each do |node|
 	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=png;term=#{h(term)}\">#{node.name}</a>\n"
 	 end
