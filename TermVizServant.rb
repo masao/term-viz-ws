@@ -17,17 +17,17 @@ class TermVizPort
    #
    def doWordSearch( term )
       saryer = Sary::Saryer.new("edr_words")
-      exact_match = ResultElementArray.new
-      substr_match = ResultElementArray.new
+      exact_match = NodeArray.new
+      substr_match = NodeArray.new
       if saryer.icase_search(term)
 	 saryer.each_context_line do |line|
 	    if line =~ /^([^\t]+)\t(.*)$/
 	       id = $1
 	       word = $2
 	       if word == term
-		  exact_match.push(ResultElement.new(id, word))
+		  exact_match.push(Node.new(word, id))
 	       else
-		  substr_match.push(ResultElement.new(id, word))
+		  substr_match.push(Node.new(word, id))
 	       end
 	    end
 	 end

@@ -21,23 +21,23 @@
 
       <xsd:complexType name="WordSearchResult">
         <xsd:all>
-          <xsd:element name="exactMatchElements"  type="typens:ResultElementArray"/>
-          <xsd:element name="substrMatchElements" type="typens:ResultElementArray"/>
+          <xsd:element name="exactMatchElements"  type="typens:NodeArray"/>
+          <xsd:element name="substrMatchElements" type="typens:NodeArray"/>
 	</xsd:all>
       </xsd:complexType>
 
-      <xsd:complexType name="ResultElementArray">
+      <xsd:complexType name="NodeArray">
         <xsd:complexContent>
           <xsd:restriction base="soapenc:Array">
-            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:ResultElement[]"/>
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Node[]"/>
           </xsd:restriction>
         </xsd:complexContent>
       </xsd:complexType>
 
-      <xsd:complexType name="ResultElement">
+      <xsd:complexType name="Node">
         <xsd:all>
-	  <xsd:element name="id"   type="xsd:string"/>
-          <xsd:element name="word" type="xsd:string"/>
+	  <xsd:element name="name"   type="xsd:string"/>
+	  <xsd:element name="idref"  type="xsd:string"/>
 	</xsd:all>
       </xsd:complexType>
 
@@ -56,21 +56,6 @@
 	  <xsd:element name="origin" type="xsd:anyURI"/>
 	  <xsd:element name="parent" type="typens:NodeArray"/>
 	  <xsd:element name="child"  type="typens:NodeArray"/>
-	</xsd:all>
-      </xsd:complexType>
-
-      <xsd:complexType name="NodeArray">
-        <xsd:complexContent>
-          <xsd:restriction base="soapenc:Array">
-            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="typens:Node[]"/>
-          </xsd:restriction>
-        </xsd:complexContent>
-      </xsd:complexType>
-
-      <xsd:complexType name="Node">
-        <xsd:all>
-	  <xsd:element name="name"   type="xsd:string"/>
-	  <xsd:element name="idref"  type="xsd:string"/>
 	</xsd:all>
       </xsd:complexType>
 

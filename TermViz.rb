@@ -24,30 +24,30 @@ class WordSearchResult
 end
 
 # urn:TermViz
-class ResultElementArray < Array; end
+class NodeArray < Array; end
 
 # urn:TermViz
-class ResultElement
-  def id
-    @id
+class Node
+  def name
+    @name
   end
 
-  def id=( newid )
-    @id = newid
+  def name=( newname )
+    @name = newname
   end
 
-  def word
-    @word
+  def idref
+    @idref
   end
 
-  def word=( newword )
-    @word = newword
+  def idref=( newidref )
+    @idref = newidref
   end
 
-  def initialize( id = nil,
-      word = nil )
-    @id = id
-    @word = word
+  def initialize( name = nil,
+      idref = nil )
+    @name = name
+    @idref = idref
   end
 end
 
@@ -106,34 +106,6 @@ class Word
     @origin = origin
     @parent = parent
     @child = child
-  end
-end
-
-# urn:TermViz
-class NodeArray < Array; end
-
-# urn:TermViz
-class Node
-  def name
-    @name
-  end
-
-  def name=( newname )
-    @name = newname
-  end
-
-  def idref
-    @idref
-  end
-
-  def idref=( newidref )
-    @idref = newidref
-  end
-
-  def initialize( name = nil,
-      idref = nil )
-    @name = name
-    @idref = idref
   end
 end
 
