@@ -74,7 +74,7 @@ def body(cgi)
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       wordlist = obj.getWordList(id)
       STDERR.puts "getWordList done."
-      dot = wordlist.to_dot(rankdir, cgi.script_name << "?format=imap;term=#{term};id=" << '#{id}')
+      dot = wordlist.to_dot(rankdir, cgi.script_name << '?format=imap;term=$label;id=$id')
 
       obj = SOAP::WSDLDriverFactory.new(GRAPHVIZ_WSDL).createDriver
       obj.resetStream
