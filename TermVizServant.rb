@@ -17,8 +17,8 @@ class TermVizPort
    #
    def doWordSearch( term )
       saryer = Sary::Saryer.new("edr_words")
-      exact_match = []
-      substr_match = []
+      exact_match = ResultElementArray.new
+      substr_match = ResultElementArray.new
       if saryer.icase_search(term)
 	 saryer.each_context_line do |line|
 	    if line =~ /^([^\t]+)\t(.*)$/
