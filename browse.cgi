@@ -6,9 +6,10 @@ GC.disable
 require 'soap/wsdlDriver'
 require 'cgi'
 require 'GraphViz'
+require 'TermUtil'
 
 TERM_WSDL     = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/term-viz.wsdl'
-GRAPHVIZ_WSDL = 'http://nile.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
+GRAPHVIZ_WSDL = 'http://avalon.ulis.ac.jp/~masao/term-viz-ws/graphviz.wsdl'
 
 class CGI
    def param(key)
@@ -73,15 +74,23 @@ def body(cgi)
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       wordlist = obj.getWordList(id)
       STDERR.puts "getWordList done."
+      dot = wordlist.to_dot(rankdir, cgi.script_name << "?format=imap;term=#{term};id=" << '#{id}')
+
       obj = SOAP::WSDLDriverFactory.new(GRAPHVIZ_WSDL).createDriver
       obj.resetStream
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       obj.generateEncodeType = true
       if format == "png" || format == "gif"
-	 result = obj.doGraphViz(wordlist, rankdir, format)
+	 result = obj.doGraphViz(dot, format)
+      elsif format == "imap"
+	 result << "<div class=\"imap\"><map name=\"imap\">\n"
+	 result << obj.doGraphViz(dot, "cmap")
+	 result << "</map>\n"
+	 img_src = "#{cgi.script_name}?format=png;term=#{CGI.escape(term)};id=#{id}"
+	 result << "<img src=\"#{img_src}\" usemap=\"#imap\"></div>\n"
       else
 	 result << "<pre>"
-	 result << obj.doGraphViz(wordlist, rankdir, format)
+	 result << obj.doGraphViz(dot, format)
 	 result << "</pre>"
       end
       STDERR.puts "doGraphViz done."
@@ -90,7 +99,7 @@ def body(cgi)
       obj.resetStream
       # obj.setWireDumpDev(File.open("browse_cgi.#{$$}", "w"))
       searched = obj.doWordSearch(term)
-      default_format = "plain"
+      default_format = "imap"
       if searched.exactMatchElements.size > 0
 	 result << "<h2>部分一致: #{searched.exactMatchElements.size}件</h2>"
 	 result << "<ul>\n"
