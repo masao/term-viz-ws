@@ -37,6 +37,18 @@ class TermVizPort
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
     [ XSD::QName.new( "urn:TermViz", "Word" ) ]
   )
+  MappingRegistry.set(
+    NodeArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    [ XSD::QName.new( "urn:TermViz", "Node" ) ]
+  )
+  MappingRegistry.set(
+    Node,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    [ XSD::QName.new( "urn:TermViz", "Node" ) ]
+  )
   
   Methods = [
     [ "doWordSearch", "doWordSearch", [
