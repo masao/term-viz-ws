@@ -9,21 +9,61 @@ class TermVizPort
 
   MappingRegistry = ::SOAP::RPCUtils::MappingRegistry.new
 
+  MappingRegistry.set(
+    WordSearchResult,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "WordSearchResult" ) }
+  )
+  MappingRegistry.set(
+    ResultElementArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "ResultElement" ) }
+  )
+  MappingRegistry.set(
+    ResultElement,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "ResultElement" ) }
+  )
+  MappingRegistry.set(
+    WordArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+  )
+  MappingRegistry.set(
+    Word,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
+  )
+  MappingRegistry.set(
+    NodeArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+  )
+  MappingRegistry.set(
+    Node,
+    ::SOAP::SOAPStruct,
+    ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
+  )
   
   Methods = [
-    [ "wordSearch", "wordSearch", [
+    [ "doWordSearch", "doWordSearch", [
       [ "in", "term",
         [ SOAP::SOAPString ] ],
-      [ "in", "target",
-        [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ SOAP::SOAPString ] ] ],
+        [ ::SOAP::SOAPStruct, "urn:TermViz", "WordSearchResult" ] ] ],
       "urn:TermVizAction", "urn:TermViz" ],
-    [ "idSearch", "idSearch", [
+    [ "getWordList", "getWordList", [
       [ "in", "id",
         [ SOAP::SOAPString ] ],
       [ "retval", "return",
-        [ SOAP::SOAPString ] ] ],
+        [ ::SOAP::SOAPArray, "urn:TermViz", "Word" ] ] ],
       "urn:TermVizAction", "urn:TermViz" ]
   ]
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/local/bin/ruby
 require 'TermVizDriver.rb'
 
 endpointUrl = ARGV.shift || TermVizPort::DefaultEndpointUrl
@@ -10,34 +10,33 @@ obj = TermVizPort.new( endpointUrl, proxyUrl )
 
 
 # SYNOPSIS
-#   wordSearch( term, target )
+#   doWordSearch( term )
 #
 # ARGS
-#   term		String - {http://www.w3.org/2001/XMLSchema}string
-#   target		String - {http://www.w3.org/2001/XMLSchema}string
+#   term		 - {http://www.w3.org/2001/XMLSchema}string
 #
 # RETURNS
-#   return		String - {http://www.w3.org/2001/XMLSchema}string
+#   return		WordSearchResult - {urn:TermViz}WordSearchResult
 #
 # RAISES
 #    N/A
 #
-term = target = nil
-puts obj.wordSearch( term, target )
+term = nil
+puts obj.doWordSearch( term )
 
 # SYNOPSIS
-#   idSearch( id )
+#   getWordList( id )
 #
 # ARGS
-#   id		String - {http://www.w3.org/2001/XMLSchema}string
+#   id		 - {http://www.w3.org/2001/XMLSchema}string
 #
 # RETURNS
-#   return		String - {http://www.w3.org/2001/XMLSchema}string
+#   return		WordArray - {urn:TermViz}WordArray
 #
 # RAISES
 #    N/A
 #
 id = nil
-puts obj.idSearch( id )
+puts obj.getWordList( id )
 
 

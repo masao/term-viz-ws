@@ -11,43 +11,43 @@ class TermVizPort
     WordSearchResult,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    [ XSD::QName.new( "urn:TermViz", "WordSearchResult" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "WordSearchResult" ) }
   )
   MappingRegistry.set(
     ResultElementArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
-  )
-  MappingRegistry.set(
-    WordArray,
-    ::SOAP::SOAPArray,
-    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    [ XSD::QName.new( "urn:TermViz", "Word" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "ResultElement" ) }
   )
   MappingRegistry.set(
     ResultElement,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    [ XSD::QName.new( "urn:TermViz", "ResultElement" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "ResultElement" ) }
+  )
+  MappingRegistry.set(
+    WordArray,
+    ::SOAP::SOAPArray,
+    ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
+    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
   )
   MappingRegistry.set(
     Word,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    [ XSD::QName.new( "urn:TermViz", "Word" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "Word" ) }
   )
   MappingRegistry.set(
     NodeArray,
     ::SOAP::SOAPArray,
     ::SOAP::RPCUtils::MappingRegistry::TypedArrayFactory,
-    [ XSD::QName.new( "urn:TermViz", "Node" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
   )
   MappingRegistry.set(
     Node,
     ::SOAP::SOAPStruct,
     ::SOAP::RPCUtils::MappingRegistry::TypedStructFactory,
-    [ XSD::QName.new( "urn:TermViz", "Node" ) ]
+    { :type => XSD::QName.new( "urn:TermViz", "Node" ) }
   )
   
   Methods = [

@@ -16,7 +16,6 @@ class WordSearchResult
     @substrMatchElements = newsubstrMatchElements
   end
 
-
   def initialize( exactMatchElements = nil,
       substrMatchElements = nil )
     @exactMatchElements = exactMatchElements
@@ -44,7 +43,6 @@ class ResultElement
   def word=( newword )
     @word = newword
   end
-
 
   def initialize( id = nil,
       word = nil )
@@ -98,7 +96,6 @@ class Word
     @child = newchild
   end
 
-
   def initialize( name = nil,
       id = nil,
       origin = nil,
@@ -132,7 +129,6 @@ class Node
   def idref=( newidref )
     @idref = newidref
   end
-
 
   def initialize( word = nil,
       idref = nil )
