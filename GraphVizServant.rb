@@ -41,10 +41,11 @@ class WordArray
    end
 end
 
+DOT = "/usr/local/bin/dot"
 def dot_format (str, format = "png")
    ENV["LD_LIBRARY_PATH"] = "/usr/local/lib"
    ENV["DOTFONTPATH"] = "."
-   cmd = open("|/usr/local/bin/dot -T#{format} -Nfontname=kochi", "r+")
+   cmd = open("|#{DOT} -T#{format} -Nfontname=kochi", "r+")
    cmd.print str
    cmd.close_write
    cmd.read
@@ -70,6 +71,6 @@ digraph G {
    EOF
    # p dot_format(test_dot, "dot")
    # p dotted_dot
-   p (dot_format(test_dot, "dot") == dotted_dot)
+   p(dot_format(test_dot, "dot") == dotted_dot)
    
 end
