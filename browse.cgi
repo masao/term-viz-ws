@@ -77,18 +77,25 @@ def body(cgi)
       obj.resetStream
       obj.setWireDumpDev(File.open("/tmp/browse_cgi.#{$$}", "a"))
       obj.generateEncodeType = true
-      result = obj.doGraphViz(wordlist, rankdir, format)
+      if format == "png" || format == "gif"
+	 result = obj.doGraphViz(wordlist, rankdir, format)
+      else
+	 result << "<pre>"
+	 result << obj.doGraphViz(wordlist, rankdir, format)
+	 result << "</pre>"
+      end
       STDERR.puts "doGraphViz done."
    elsif term
       obj = SOAP::WSDLDriverFactory.new(TERM_WSDL).createDriver
       obj.resetStream
       # obj.setWireDumpDev(File.open("browse_cgi.#{$$}", "w"))
       searched = obj.doWordSearch(term)
+      default_format = "plain"
       if searched.exactMatchElements.size > 0
 	 result << "<h2>部分一致: #{searched.exactMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.exactMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=png;term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
@@ -96,7 +103,7 @@ def body(cgi)
 	 result << "<h2>部分一致: #{searched.substrMatchElements.size}件</h2>"
 	 result << "<ul>\n"
 	 searched.substrMatchElements.each do |node|
-	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=png;term=#{h(term)}\">#{node.name}</a>\n"
+	    result << "<li><a href=\"./browse.cgi?id=#{h(node.idref)};format=#{default_format};term=#{h(term)}\">#{node.name}</a>\n"
 	 end
 	 result << "</ul>"
       end
