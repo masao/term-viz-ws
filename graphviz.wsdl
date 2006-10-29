@@ -63,7 +63,7 @@
   <!-- Endpoint -->
   <service name="GraphVizService">
     <port name="GraphVizPort" binding="typens:GraphVizBinding">
-      <soap:address location="http://avalon.ulis.ac.jp/~masao/term-viz-ws/GraphVizService.cgi"/>
+      <soap:address location="http://avalon.slis.tsukuba.ac.jp/~masao/term-viz-ws/GraphVizService.cgi"/>
     </port>
   </service>
 
